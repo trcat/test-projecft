@@ -14,12 +14,27 @@
                 <el-input><el-input>
             </div>
             <div id="login-forget-password">
-
+                <a id="forget">忘记密码</a>
             </div>
+        </div>
+        <div id="login-button">
+            <el-button></el-button>
         </div>
     </div>
 </template>
 
+<script>
+    export default {
+        name: "Login"
+    }
+
+</script>
+
 <style lang="scss" scoped>
-    @import url();
+    #login-main {
+        width: 314px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 10px;
+    }
 </style>
