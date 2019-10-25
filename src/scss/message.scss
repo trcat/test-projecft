@@ -1,0 +1,8 @@
+@mixin message($fontSize, $color){
+    font-size: $fontSize;
+    color: $color;
+}
+
+.error-message {
+    @include message(14px, red);
+}
