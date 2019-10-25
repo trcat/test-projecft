@@ -4,37 +4,86 @@
             登录
         </div>
         <div id="login-content">
-            <div id="login-error-message">
-                <span class="error-message"></span>
+            <div id="login-error-message"
+                 class="error-message">
+                {{errorMessage}}
             </div>
-            <div id="login-input">
+            <div class="login-input">
                 <el-input></el-input>
             </div>
-            <div id="login-input">
+            <div class="login-input">
                 <el-input></el-input>
             </div>
             <div id="login-forget-password">
-                <a id="forget">忘记密码</a>
+                <el-link >忘记密码</el-link>
             </div>
         </div>
         <div id="login-button">
-            <el-button></el-button>
+            <el-button type="primary"
+                       class="button">登录</el-button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Login"
+        name: "Login",
+        data() {
+            return {
+                errorMessage: "登录失败",
+                
+            }
+        }
     }
 
 </script>
 
 <style lang="scss" scoped>
+    @import url(../scss/message.scss);
+
     #login-main {
         width: 314px;
+        height: 366px;
+        margin-top: 229px;
         margin-left: auto;
         margin-right: auto;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #ffffff;
         border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        #login-title {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 34px;
+        }
+        #login-content {
+            overflow: hidden;
+            width: 240px;
+            margin-top: 25px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 14px;
+            #login-error-message {
+                height: 20px;
+            }
+            .login-input {
+                margin-top: 10px;
+            }
+            #login-forget-password {
+                margin-top: 10px;
+                float: right;
+            }
+        }
+        #login-button {
+            width: 240px;
+            margin-top: 26px;
+            margin-left: auto;
+            margin-right: auto;
+            .button {
+                width: 100%;
+            }
+        }
     }
 </style>

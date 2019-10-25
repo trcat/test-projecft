@@ -6,3 +6,21 @@
 .error-message {
     @include message(14px, red);
 }
+
+.icon-success {
+    color: #67C23A;
+}
+
+.icon-error {
+    color: red;
+}
+
+.input-success {
+    border-style: solid;
+    border-color: #67C23A;
+}
+
+.input-error {
+    border-style: solid;
+    border-color: red;
+}
