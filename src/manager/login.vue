@@ -8,10 +8,10 @@
                 <span class="error-message"></span>
             </div>
             <div id="login-input">
-                <el-input><el-input>
-            <div>
+                <el-input></el-input>
+            </div>
             <div id="login-input">
-                <el-input><el-input>
+                <el-input></el-input>
             </div>
             <div id="login-forget-password">
                 <a id="forget">忘记密码</a>
