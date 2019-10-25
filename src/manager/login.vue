@@ -4,15 +4,20 @@
             登录
         </div>
         <div id="login-content">
-            <div id="login-error-message"
-                 class="error-message">
+            <div 
+                id="login-error-message"
+                class="error-message">
                 {{errorMessage}}
             </div>
             <div class="login-input">
-                <el-input></el-input>
+                <el-input 
+                    placeholder="学工号"
+                    v-model="account"></el-input>
             </div>
             <div class="login-input">
-                <el-input></el-input>
+                <el-input 
+                    placeholder="密码"
+                    v-model="password"></el-input>
             </div>
             <div id="login-forget-password">
                 <el-link >忘记密码</el-link>
@@ -31,7 +36,8 @@
         data() {
             return {
                 errorMessage: "登录失败",
-                
+                account: "",
+                password: ""
             }
         }
     }
