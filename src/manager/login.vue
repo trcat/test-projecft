@@ -12,33 +12,93 @@
             <div class="login-input">
                 <el-input 
                     placeholder="学工号"
+                    :disabled="disabled"
                     v-model="account"></el-input>
             </div>
             <div class="login-input">
                 <el-input 
                     placeholder="密码"
-                    v-model="password"></el-input>
+                    type="password"
+                    v-model="password"
+                    :disabled="disabled"
+                    show-password></el-input>
             </div>
             <div id="login-forget-password">
-                <el-link >忘记密码</el-link>
+                <el-link @click="findPassword">忘记密码</el-link>
             </div>
         </div>
         <div id="login-button">
             <el-button type="primary"
-                       class="button">登录</el-button>
+                       class="button"
+                       :loading="loading"
+                       :disabled="disabled"
+                       @click="login">登录</el-button>
         </div>
     </div>
 </template>
 
 <script>
+
+    import API from "../API/login.js";
+
+    const errorMessages = {
+        empty: "账号或密码填写有误！"
+    };
+
     export default {
         name: "Login",
         data() {
             return {
-                errorMessage: "登录失败",
+                errorMessage: "",
                 account: "",
-                password: ""
+                password: "",
+                loading: false,
+                disabled: false,
             }
+        },
+        methods: {
+            login(e) {
+                e.stopPropagation();
+                this._clearErrorMessage();
+                //step 1，检查 input 是否都有内容
+                if (this.account && this.password) {
+                    //step 2, 修改 input & button 状态
+                    this.loading = true;
+                    this.disabled = true
+                    //step 3，呼叫后端 API 申请登录
+                    const callback = (data) => {
+                        if (data.success) {
+                            this.loading = false;
+                            //step 4, 记录 userId & token 至 cookie 中
+                            
+                            this.$store.commit("setUserId", this.account);
+                            this.$store.commit("setToken", data.token);
+                            //step 5, 跳转至主页面
+                            this.$router.push("/main");
+                        } else {
+                            //登录失败，恢复 input & button 可编辑状态
+                            this.loading = false;
+                            this.disabled = false;
+                            this._showErrorMessage(data.message);
+                        }
+                    }
+                    API.login(this.account, this.password, callback);
+                    
+                } else {
+                    this._showErrorMessage(errorMessages.empty);
+                }
+            },
+            findPassword(e) {
+                e.stopPropagation();
+                this.$router.push("/find-password");
+            },
+            _showErrorMessage(message) {
+                alert(message);
+                this.errorMessage = message;
+            },
+            _clearErrorMessage() {
+                this.errorMessage = "";
+            },
         }
     }
 

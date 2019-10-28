@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../manager/login.vue';
+import FindPassword from "../manager/find-password.vue";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,11 @@ const routes = [
     name: 'login',
     component: Login,
     alias: '/login'
+  },
+  {
+    path: "/find-password",
+    name: "find-password",
+    component: FindPassword
   }
 ];
 
