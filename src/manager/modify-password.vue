@@ -1,15 +1,15 @@
 <template>
     <div id="form" class="default-box">
-        <h2>找回密码</h2>
+        <h2>修改秘密</h2>
         <el-form id="form-content" label-width="100px" label-position="left">
-            <el-form-item label="学工号" required="true">
-                <el-input></el-input>
+            <el-form-item label="新密码" required="true">
+                <el-input type="password" show-password></el-input>
             </el-form-item>
-            <el-form-item label="已绑定邮箱" required="true">
-                <el-input type="email"></el-input>
+            <el-form-item label="确认密码" required="true">
+                <el-input type="email" show-password></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary">发送验证邮件至邮箱</el-button>
+                <el-button type="primary">提交</el-button>
             </el-form-item>
         </el-form>
         <div class="error-message">错误讯息</div>
@@ -31,4 +31,3 @@ export default {
         margin-top: 5%;
     }
 </style>
-

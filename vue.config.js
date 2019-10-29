@@ -2,7 +2,7 @@ const debug = process.env.NODE_ENV !== "production";
 
 module.exports = {
     runtimeCompiler: true,
-    publicPath: "./",
+    publicPath: "/",
     outputDir: "dist",
     pages: {
         index: {

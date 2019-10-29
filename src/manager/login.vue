@@ -1,5 +1,5 @@
 <template>
-    <div id="login-main">
+    <div id="login-main" class="default-box">
         <div id="login-title">
             登录
         </div>
@@ -90,7 +90,7 @@
             },
             findPassword(e) {
                 e.stopPropagation();
-                this.$router.push("/find-password");
+                this.$router.push("/password/find");
             },
             _showErrorMessage(message) {
                 alert(message);
@@ -110,15 +110,9 @@
     #login-main {
         width: 314px;
         height: 366px;
-        margin-top: 229px;
+        margin-top: 10%;
         margin-left: auto;
         margin-right: auto;
-        border-style: solid;
-        border-width: 1px;
-        border-color: #ffffff;
-        border-radius: 10px;
-        background-color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
         #login-title {
             font-size: 24px;
             text-align: center;

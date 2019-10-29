@@ -7,20 +7,15 @@
     @include message(14px, red);
 }
 
-.icon-success {
-    color: #67C23A;
+.default-col-side {
+    min-height: 1px;
 }
 
-.icon-error {
-    color: red;
-}
-
-.input-success {
+.default-box {
     border-style: solid;
-    border-color: #67C23A;
-}
-
-.input-error {
-    border-style: solid;
-    border-color: red;
+    border-width: 1px;
+    border-color: #ffffff;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 }
