@@ -2,10 +2,10 @@
     <div id="form" class="default-box">
         <h2>修改秘密</h2>
         <el-form id="form-content" label-width="100px" label-position="left">
-            <el-form-item label="新密码" required="true">
+            <el-form-item label="新密码">
                 <el-input type="password" show-password></el-input>
             </el-form-item>
-            <el-form-item label="确认密码" required="true">
+            <el-form-item label="确认密码">
                 <el-input type="email" show-password></el-input>
             </el-form-item>
             <el-form-item>

@@ -2,7 +2,7 @@ import Vue from "vue";
 import ElementUI from "element-ui";
 import "./assets/style/theme/index.css";
 import "./scss/message.scss";
-import Router from  "./router/index.js";
+import Router from  "./router/layout/index.js";
 import Store from "./store/index.js";
 import http from "./API/API.js";
 

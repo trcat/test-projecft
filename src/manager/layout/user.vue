@@ -2,14 +2,14 @@
     <el-container id="main-container">
         <el-aside width="20%">
             <el-menu
-                default-active="1"
-                default-openeds="['2','3']">
+                :default-active="active"
+                :default-openeds="['2','3']">
                 <el-menu-item index="1">
                     <span>欢迎，DayDayBigKing</span>
                 </el-menu-item>
                 <el-submenu index="2">
                     <template slot="title"><i class="el-icon-menu"></i>管理账号</template>
-                    <el-menu-item >添加账号</el-menu-item>
+                    <el-menu-item>添加账号</el-menu-item>
                     <el-menu-item >编辑账号</el-menu-item>
                 </el-submenu>
                 <el-submenu index="3">
@@ -34,20 +34,38 @@
         </el-aside>
         
         <el-container>
-            <router-view></router-view>
+            <el-main>
+                <div id="main-content" class="default-box">
+                    <el-container>
+                        <el-main>
+                            <router-view></router-view>
+                        </el-main>
+                    </el-container>
+                </div>
+            </el-main>
         </el-container>
     </el-container>
 </template>
 
 <script>
 export default {
-    
+    data() {
+        return {
+            active: "1"
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
     #main-container {
         width: 100%;
+        .el-main {
+            #main-content {
+                background-color: white;
+                padding: 3%;
+            }
+        }
     }
 
     #out {

@@ -2,10 +2,10 @@
     <div id="form" class="default-box">
         <h2>找回密码</h2>
         <el-form id="form-content" label-width="100px" label-position="left">
-            <el-form-item label="学工号" required="true">
+            <el-form-item label="学工号">
                 <el-input></el-input>
             </el-form-item>
-            <el-form-item label="已绑定邮箱" required="true">
+            <el-form-item label="已绑定邮箱">
                 <el-input type="email"></el-input>
             </el-form-item>
             <el-form-item>

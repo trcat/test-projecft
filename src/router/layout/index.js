@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '../manager/login.vue';
-import CenterContainer from "../manager/centerContainer.vue";
-import FindPassword from "../manager/find-password.vue";
-import ModifyPassword from "../manager/modify-password.vue";
-import User from "../manager/user.vue";
+import Login from '../../manager/layout/login.vue';
+import CenterContainer from "../../manager/layout/centerContainer.vue";
+import FindPassword from "../../manager/layout/find-password.vue";
+import ModifyPassword from "../../manager/layout/modify-password.vue";
+import User from "../../manager/layout/user.vue";
+import AddAccount from "../../manager/layout/addAccount.vue";
 
 
 Vue.use(VueRouter);
@@ -32,7 +33,13 @@ const routes = [
     ]
   }, {
     path: "/user/:id",
-    component: User
+    component: User,
+    children: [
+      {
+        path: "add-account",
+        component: AddAccount
+      }
+    ]
   }
 ];
 

@@ -39,7 +39,7 @@
 
 <script>
 
-    import API from "../API/login.js";
+    import API from "../../API/login.js";
 
     const errorMessages = {
         empty: "账号或密码填写有误！"
@@ -105,7 +105,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import url(../scss/message.scss);
+    @import url(../../scss/message.scss);
 
     #login-main {
         width: 314px;
