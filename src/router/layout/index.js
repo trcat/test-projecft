@@ -5,7 +5,9 @@ import CenterContainer from "../../manager/layout/centerContainer.vue";
 import FindPassword from "../../manager/layout/find-password.vue";
 import ModifyPassword from "../../manager/layout/modify-password.vue";
 import User from "../../manager/layout/user.vue";
-import AddAccount from "../../manager/layout/addAccount.vue";
+import AddAccount from "../../manager/layout/add-account.vue";
+import UserProfile from "../../manager/layout/user-profile.vue";
+import EditAccount from "../../manager/layout/edit-account.vue";
 
 
 Vue.use(VueRouter);
@@ -38,6 +40,12 @@ const routes = [
       {
         path: "add-account",
         component: AddAccount
+      }, {
+        path: "",
+        component: UserProfile
+      }, {
+        path: "edit-account",
+        component: EditAccount
       }
     ]
   }
