@@ -56,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>
     .el-form {
-        width: 50%;
+        width: 60%;
         margin-left: auto;
         margin-right: auto;
     }

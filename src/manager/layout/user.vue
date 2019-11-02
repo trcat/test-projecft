@@ -17,10 +17,12 @@
                     <el-menu-item>添加班级</el-menu-item>
                     <el-menu-item>编辑班级</el-menu-item>
                 </el-submenu>
-                <el-menu-item index="4">
-                    <i class="el-icon-menu"></i>
-                    <span>管理试卷</span>
-                </el-menu-item>
+                <el-submenu index="4">
+                    <template slot="title"> <i class="el-icon-menu"></i>管理试卷</template>
+                    <el-menu-item>添加试卷</el-menu-item>
+                    <el-menu-item>编辑试卷</el-menu-item>
+                    <el-menu-item>查看历史考试</el-menu-item>
+                </el-submenu>
                 <el-menu-item index="5">
                     <i class="el-icon-menu"></i>
                     <span>考试</span>

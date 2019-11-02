@@ -46,7 +46,7 @@
                 <el-button type="primary">保存</el-button>
                 <el-button @click="visiable = false">取 消</el-button>
             </div>
-            <el-dialog title="修改密码" :visible.sync="inner" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" append-to-body="">
+            <el-dialog title="修改密码" :visible.sync="inner" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" append-to-body>
                 <el-form label-position="left" label-width="100px">
                     <span class="error-message">错误讯息</span>
                     <el-form-item label="旧密码">
@@ -79,7 +79,7 @@ export default {
 
 <style lang="scss" scoped>
     .el-form {
-        width: 50%;
+        width: 60%;
         margin-left: auto;
         margin-right: auto;
     }
