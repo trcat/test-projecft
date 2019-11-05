@@ -11,6 +11,8 @@ import EditAccount from "../../manager/layout/edit-account.vue";
 import AddClass from "../../manager/layout/add-class.vue";
 import EditClass from "../../manager/layout/edit-class.vue";
 import AddTest from "../../manager/layout/add-test.vue";
+import HistoryTest from "../../manager/layout/history-test.vue";
+import ResultTest from "../../manager/layout/result-test.vue";
 
 
 Vue.use(VueRouter);
@@ -37,16 +39,19 @@ const routes = [
       }
     ]
   }, {
-    path: "/user/:id",
+    path: "/user",
     component: User,
     children: [
       {
         path: "add-account",
         component: AddAccount
       }, {
-        path: "",
-        component: UserProfile
+        path: "profile",
+        component: UserProfile,
       }, {
+        path: "",
+        redirect: "profile"
+      },{
         path: "edit-account",
         component: EditAccount
       }, {
@@ -58,6 +63,12 @@ const routes = [
       }, {
         path: "add-test",
         component: AddTest
+      }, {
+        path: "history-test",
+        component: HistoryTest
+      }, {
+        path: "result-test",
+        component: ResultTest
       }
     ]
   }

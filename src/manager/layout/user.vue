@@ -2,14 +2,14 @@
     <el-container id="main-container">
         <el-aside width="20%">
             <el-menu
-                :default-active="active"
-                :default-openeds="['2','3']">
-                <el-menu-item index="1">
+                :default-active="1"
+                router>
+                <el-menu-item index="/user/profile">
                     <span>欢迎，DayDayBigKing</span>
                 </el-menu-item>
                 <el-submenu index="2">
                     <template slot="title"><i class="el-icon-menu"></i>管理账号</template>
-                    <el-menu-item>添加账号</el-menu-item>
+                    <el-menu-item index="history-test">添加账号</el-menu-item>
                     <el-menu-item >编辑账号</el-menu-item>
                 </el-submenu>
                 <el-submenu index="3">
@@ -21,7 +21,7 @@
                     <template slot="title"> <i class="el-icon-menu"></i>管理试卷</template>
                     <el-menu-item>添加试卷</el-menu-item>
                     <el-menu-item>编辑试卷</el-menu-item>
-                    <el-menu-item>查看历史考试</el-menu-item>
+                    <el-menu-item>拍卷历史</el-menu-item>
                 </el-submenu>
                 <el-menu-item index="5">
                     <i class="el-icon-menu"></i>
