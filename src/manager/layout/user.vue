@@ -2,8 +2,7 @@
     <el-container id="main-container">
         <el-aside width="20%">
             <el-menu
-                :default-active="1"
-                router>
+                default-active="1">
                 <el-menu-item index="/user/profile">
                     <span>欢迎，DayDayBigKing</span>
                 </el-menu-item>
@@ -33,6 +32,12 @@
                 </el-menu-item>
             </el-menu>
             <el-button id="out" type="danger">登出</el-button>
+            <el-card>
+                <div id="timer">
+                    <div>考试时间还剩（分钟）:</div>
+                    <div id="time">xxx</div>
+                </div>
+            </el-card>
         </el-aside>
         
         <el-container>
@@ -73,6 +78,14 @@ export default {
     #out {
         width: 100%;
         margin-top: 10%;
+    }
+
+    #timer {
+        text-align: center;
+        #time {
+            color: gray;
+            font-size: 50px;
+        }
     }
 </style>
 

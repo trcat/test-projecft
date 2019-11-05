@@ -3,7 +3,7 @@
         <el-card>
             <div slot="header">
                 <span>试卷1</span>
-                <el-button class="card-button" icon="el-icon-view" @click="visible=true" circle></el-button>
+                <el-button class="card-button" type="text" @click="visible=true" circle>查看考试结果 >></el-button>
             </div>
             <div>xxxxxx</div>
             <div>x x x x x x</div>

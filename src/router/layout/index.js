@@ -13,6 +13,8 @@ import EditClass from "../../manager/layout/edit-class.vue";
 import AddTest from "../../manager/layout/add-test.vue";
 import HistoryTest from "../../manager/layout/history-test.vue";
 import ResultTest from "../../manager/layout/result-test.vue";
+import ResultTestP from "../../manager/layout/result-test-person.vue";
+import ViewTest from "../../manager/layout/view-test.vue";
 
 
 Vue.use(VueRouter);
@@ -69,6 +71,12 @@ const routes = [
       }, {
         path: "result-test",
         component: ResultTest
+      }, {
+        path: "result-test-person",
+        component: ResultTestP
+      }, {
+        path: "view-test",
+        component: ViewTest
       }
     ]
   }
