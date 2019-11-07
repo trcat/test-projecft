@@ -66,13 +66,17 @@ export default {
         container: centerContainer
     },
     methods: {
-        reset() {
+        _reset() {
             this.disabled = false;
             this.loading = false;
             this.buttonName = buttonName;
             clearInterval(timer);
             count = 60;
+            timer = null;
         },
+        /**
+         * @param {string} formName
+         */
         setEmail(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -85,7 +89,7 @@ export default {
                             //显示错误讯息
                             form.errorMessage = data.message;
                             //恢复 input 和 button 促使状态
-                            this.reset();
+                            this._reset();
                         }
                     }
 
@@ -97,7 +101,7 @@ export default {
                     timer = setInterval(() => {
                         if (count === 0) {
                             //当 60s 倒计时结束后，恢复 input 和 button 的状态
-                            this.reset();
+                            this._reset();
                         } else {
                             count = count - 1;
                             this.buttonName = `邮件已发送，${count} 秒后可重新发送！`

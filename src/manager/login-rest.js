@@ -30,7 +30,14 @@ const _transLoginConfig = function (password, id, email) {
  * @param {Function} callback 
  */
 const _login = function (data, callback) {
-    AjaxHelper.ajax("/auth/", "post", data, true, callback);
+    const ajaxObject = {
+        url: "/auth/",
+        tyle: "post",
+        data: data,
+        async: true,
+        success: callback
+    };
+    AjaxHelper.ajax(ajaxObject);
 };
 
 

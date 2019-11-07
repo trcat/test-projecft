@@ -4,6 +4,7 @@ import "jquery.cookie";
 
 export default class AjaxHelper {
     /**
+     * config 包含如下内容
      * @param {string} url 
      * @param {string} type 
      * @param {Object|null|undefined} data 
@@ -11,18 +12,18 @@ export default class AjaxHelper {
      * @param {Function|null|undefined} success 
      * @param {Function|null|undefined} error 
      */
-    static ajax(url, type, data, async, success, error) {
+    static ajax(config) {
         let ajaxObject = {
-            type: type,
-            url: url,
+            type: config.type,
+            url: config.url,
             /**
              * @param {Object} data
              * @param {string} textStatus
              * @param {jqXHR} jqXHR
              */
             success: function (data, textStatus, jqXHR) {
-                if (typeof success === "function") {
-                    success(data, textStatus, jqXHR);
+                if (typeof config.success === "function") {
+                    config.success(data, textStatus, jqXHR);
                 }
             },
             /**
@@ -31,8 +32,8 @@ export default class AjaxHelper {
              * @param {string} errorThrown
              */
             error: function (jqXHR, textStatus, errorThrown) {
-                if (typeof error === "function") {
-                    error(jqXHR, textStatus, errorThrown);
+                if (typeof config.error === "function") {
+                    config.error(jqXHR, textStatus, errorThrown);
                 } else {
                     console.log("操作失败！");
                     console.log(jqXHR);
@@ -41,11 +42,11 @@ export default class AjaxHelper {
                 }
             },
             dataType: "json",
-            async: async || false
+            async: config.async || false
         };
 
-        if (data) {
-            ajaxObject.data = data;
+        if (config.data) {
+            ajaxObject.data = config.data;
         }
 
         const token = "JWT " + $.cookie("token");
