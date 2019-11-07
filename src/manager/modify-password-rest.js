@@ -6,7 +6,7 @@ export default class API {
      * @param {Function} callback 
      */
     static modifyPassword(data, callback) {
-        const url = `/user/resetPwd/?token=${data}`;
+        const url = `/user/resetPwd/?token=${data}/`;
         const ajaxObject = {
             url: url,
             type: "get",

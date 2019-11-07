@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import login from "../manager/login.vue";
 import findPassword from "../manager/find-password.vue";
 import modifyPassword from "../manager/modify-password.vue";
+import user from "../manager/user.vue";
+import profile from "../manager/user-profile.vue";
 
 
 Vue.use(VueRouter);
@@ -20,6 +22,22 @@ const routes = [
     }, {
         path: "/modify-password",
         component: modifyPassword
+    }, {
+        path: "/user",
+        component: user,
+        meta: {
+            activeMenu: "/user"
+        },
+        children: [
+            {
+                path: "",
+                component: profile,
+                meta: {
+                    activeMenu: "/user",
+                    subActiveMenu: "/user"
+                }
+            }
+        ]
     }
 ];
 

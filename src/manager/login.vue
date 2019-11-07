@@ -104,9 +104,9 @@ export default {
           const form = this.loginForm;
           const callback = function (data) {
             if (data.state) {
-              //将 token 保存在 cookie，将 user data 保存在 localStorage 中
+              //将 token 保存在 cookie，将 user data 保存在 store 中
               $.cookie("token", data.token);
-              localStorage.setItem("user", data.data);
+              this.$store.commit("updateUser", data.data);
               //跳转进 user 页面
               this.$router.push("/user");
               
