@@ -11,7 +11,7 @@ export default new Vuex.Store({
       "identity": "student",
       "username": "admin",
       "gender": "male",
-      "phone": "",
+      "phone": "17855860685",
       "my_class": null,
       "email": "11@163.com"
     }

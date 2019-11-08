@@ -43,7 +43,7 @@ export default {
         getResetPassword() {
             const data = localStorage.getItem("modifyPasswordData");
             
-            const callback = function (data) {
+            const callback = (data) => {
                 if (!data.state) {
                     alert(data.message);
                     this._reset();

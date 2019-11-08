@@ -102,7 +102,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const form = this.loginForm;
-          const callback = function (data) {
+          const callback = (data) => {
             if (data.state) {
               //将 token 保存在 cookie，将 user data 保存在 store 中
               $.cookie("token", data.token);
@@ -143,7 +143,7 @@ export default {
 
       //跳转至忘记密码页面
       this.$router.push("/find-password");
-    }
+    },
   }
 };
 </script>

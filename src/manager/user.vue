@@ -33,7 +33,6 @@
 export default {
     data() {
         return {
-            userName: "",
             isAdmin: false,
             isTecher: false,
             isStudent: false,
@@ -41,6 +40,15 @@ export default {
         }
     },
     computed: {
+        userName() {
+            const storeUser = this.$store.state.user;
+
+            if (storeUser) {
+                return storeUser.username;
+            }
+
+            return null;
+        },
         activeMenu() {
             const route = this.$route;
             const { meta, path} = route;
@@ -52,20 +60,13 @@ export default {
             return path;
         }
     },
-    beforeCreate() {
-        //查看 store 中是否有 user 数据存在，没有则表示用户没有进度登录，将页面跳转至登录页
-        const state = this.$store.state;
-        
-        if (!state.user) {
+    mounted() {
+        if (this.userName) {
+            //消除页面整体的 loading 状态
+            this.mainLoading = false;
+        } else {
             this.$router.push("/");
         }
-    },
-    mounted() {
-        //消除页面整体的 loading 状态
-        this.mainLoading = false;
-        //此时 store 中的 user 一定存在，故开始赋值操作
-        const user = this.$store.state.user;
-        this.userName = user.username;
     }
 }
 </script>

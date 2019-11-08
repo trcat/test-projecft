@@ -81,7 +81,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const form = this.findForm;
-                    const callback = function (data) {
+                    const callback = (data) => {
                         if (data.state) {
                             //将 data 存至 localstorage，修改密码时用
                             localStorage.setItem("modifyPasswordData", data.data);

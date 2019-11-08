@@ -14,5 +14,16 @@ Vue.prototype.$http = http; // 添加原型方法，这样创建的对象就自�
 
 new Vue({
     router: Router,
-    store: Store
+    store: Store,
+    created() {
+        //防止重新加载页面后 store.state.user 数据被重置
+        if(sessionStorage.getItem("userData")) {
+            this.$store.commit("updateUser", JSON.parse(sessionStorage.getItem("userData")));
+            sessionStorage.removeItem("userData");
+        }
+
+        window.addEventListener("beforeunload", () => {
+            this.$store.state.user && sessionStorage.setItem("userData", JSON.stringify(this.$store.state.user));
+        });
+    }
 }).$mount("#main");
