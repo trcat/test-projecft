@@ -1,19 +1,18 @@
 import AjaxHelper from "./ajax-helper.js";
 
 export default class API {
-    static saveProfile(data, callback) {
+    static getClassOptions(callback) {
         AjaxHelper.ajax({
-            url: `/user/userInfo/${data.id}/`,
-            type: "put",
-            data: data,
+            url: "/user/class/",
+            type: "get",
             async: true,
             success: callback
         });
     }
-    static savePassword(data, callback) {
+    static createAccount(data, callback) {
         AjaxHelper.ajax({
-            url: `/user/userInfo/${data.id}/`,
-            type: "put",
+            url: "/user/userInfo/",
+            type: "post",
             data: data,
             async: true,
             success: callback

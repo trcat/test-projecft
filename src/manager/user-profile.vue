@@ -20,11 +20,11 @@
                 <span>{{user.email}}</span>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="openEditProfileDialog">编辑</el-button>
+                <el-button type="primary" @click="openEditProfileDialog">编 辑</el-button>
             </el-form-item>
         </el-form>
         <el-dialog title="编辑个人信息" :visible.sync="editProfile" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-            <el-form label-position="left" label-width="100px" :model="profileForm" ref="profileForm" :rules="profileFormRules">
+            <el-form label-position="left" label-width="100px" :model="profileForm" ref="profileForm" :rules="profileFormRules" hide-required-asterisk>
                 <el-form-item label="学工号">
                     <el-input v-model="user.id" disabled></el-input>
                 </el-form-item>
@@ -42,11 +42,11 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="saveProfile('profileForm')" :disabled="disabled" :loading="loading">保存</el-button>
+                <el-button type="primary" @click="saveProfile('profileForm')" :disabled="disabled" :loading="loading">保 存</el-button>
                 <el-button @click="editProfile = false" :disabled="disabled">取 消</el-button>
             </div>
             <el-dialog title="修改密码" :visible.sync="editPassword" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" append-to-body>
-                <el-form label-position="left" label-width="100px" :model="passwordForm" ref="passwordForm" :rules="passwordForm">
+                <el-form label-position="left" label-width="100px" :model="passwordForm" ref="passwordForm" :rules="passwordForm" hide-required-asterisk>
                     <el-form-item label="旧密码" prop="oldPassword">
                         <el-input type="password" v-model="passwordForm.oldPassword" show-password :disabled="disabled"></el-input>
                     </el-form-item>

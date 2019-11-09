@@ -81,7 +81,7 @@ export default {
         },
         activeMenu() {
             const route = this.$route;
-            const { meta, path} = route;
+            const { meta, path } = route;
 
             if (meta.subActiveMenu) {
                 return meta.subActiveMenu

@@ -5,6 +5,9 @@ import findPassword from "../manager/find-password.vue";
 import modifyPassword from "../manager/modify-password.vue";
 import user from "../manager/user.vue";
 import profile from "../manager/user-profile.vue";
+import addAcount from "../manager/add-account.vue";
+import editAccount from "../manager/edit-account.vue";
+import addClass from "../manager/add-class.vue";
 
 
 Vue.use(VueRouter);
@@ -35,6 +38,27 @@ const routes = [
                 meta: {
                     activeMenu: "/user",
                     subActiveMenu: "/user"
+                }
+            }, {
+                path: "add-account",
+                component: addAcount,
+                meta: {
+                    activeMenu: "/user",
+                    subActiveMenu: "/user/add-account"
+                }
+            }, {
+                path: "edit-account",
+                component: editAccount,
+                meta: {
+                    activeMenu: "/user",
+                    subActiveMenu: "/user/edit-account"
+                }
+            }, {
+                path: "add-class",
+                component: addClass,
+                meta: {
+                    activeMenu: "/user",
+                    subActiveMenu: "/user/add-class"
                 }
             }
         ]
