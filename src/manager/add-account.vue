@@ -9,7 +9,7 @@
         </el-form-item>
         <el-form-item v-if="form.identity === 'student'" label="所属班级" prop="class">
             <el-select v-model="form.class" placeholder="班级">
-                <el-option v-if="form.classOptions.length === 0" v-loading="formLoading" key="loading" value="loading" label="loading"></el-option>
+                <el-option v-if="form.classOptions.length === 0" v-loading="formLoading" key="empty" value="empty" label="无可选班级"></el-option>
                 <el-option
                     v-for="item in form.classOptions"
                     :key="item.value"

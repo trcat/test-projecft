@@ -25,7 +25,7 @@
                     </el-form-item>
                     <el-form-item v-if="editForm.identity === 'student'" label="所属班级" prop="class">
                         <el-select v-model="editForm.my_class" placeholder="班级">
-                            <el-option v-if="editForm.classOptions.length === 0" v-loading="loadingClassOptions" key="loading" value="loading" label="loading"></el-option>
+                            <el-option v-if="editForm.classOptions.length === 0" v-loading="loadingClassOptions" key="empty" value="empty" label="无可选班级"></el-option>
                             <el-option
                                 v-for="item in editForm.classOptions"
                                 :key="item.value"
