@@ -2,14 +2,39 @@
     <el-container id="main-container" v-loading="mainLoading">
         <el-aside width="20%">
             <el-menu
-                :default-active="activeMenu">
+                :default-active="activeMenu"
+                @select="select">
                 <el-menu-item index="/user">
                     <i class="el-icon-user"></i>
                     <span>欢迎，{{userName}} !</span>
                 </el-menu-item>
                 <!-- admin menu -->
+                <template v-if="userIdentity === 'administrator'">
+                    <el-submenu index="2">
+                        <template slot="title"><i class="el-icon-menu"></i>管理账号</template>
+                        <el-menu-item index="/user/add-account">添加账号</el-menu-item>
+                        <el-menu-item index="/user/edit-account">编辑账号</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                        <template slot="title"><i class="el-icon-menu"></i>管理班级</template>
+                        <el-menu-item index="/user/add-class">添加班级</el-menu-item>
+                        <el-menu-item index="/user/edit-class">编辑班级</el-menu-item>
+                    </el-submenu>
+                </template>
                 <!-- teacher menu -->
+                <template v-if="userIdentity === 'teacher'">
+                    <el-submenu index="2">
+                        <template slot="title"><i class="el-icon-menu"></i>管理试卷</template>
+                        <el-menu-item index="/user/add-test">添加试卷</el-menu-item>
+                        <el-menu-item index="/user/edit-test">编辑试卷</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item index="/user/result-test">查看考试结果</el-menu-item>                    
+                </template>
                 <!-- student menu -->
+                <template v-if="userIdentity === 'student'">
+                    <el-menu-item index="/user/visit-test">考试</el-menu-item>
+                    <el-menu-item index="/user/result-test">查看考试结果</el-menu-item>                    
+                </template>
             </el-menu>
             <el-button id="out" type="danger">登出</el-button>
         </el-aside>
@@ -41,12 +66,17 @@ export default {
     },
     computed: {
         userName() {
-            const storeUser = this.$store.state.user;
-
-            if (storeUser) {
-                return storeUser.username;
+            if (this.$store.state.user) {
+                return this.$store.state.user.username;
             }
 
+            return null;
+        },
+        userIdentity() {
+            if (this.$store.state.user) {
+                return this.$store.state.user.identity;
+            }
+            
             return null;
         },
         activeMenu() {
@@ -58,6 +88,16 @@ export default {
             }
 
             return path;
+        }
+    },
+    methods: {
+        /**
+         * @param {string} index
+         */
+        select(index) {
+            if (index !== this.activeMenu) {
+                this.$router.push(index);
+            }
         }
     },
     mounted() {
