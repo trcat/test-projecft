@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <el-input placeholder="搜索学工号" v-model="searchValue" :disabled="disabled">
+        <el-input placeholder="搜索账户" v-model="searchValue" :disabled="disabled">
             <el-button slot="append" icon="el-icon-search" :disabled="disabled" :loading="loading" @click="searchUser"></el-button>
         </el-input>
         <template v-if="user">
