@@ -107,7 +107,13 @@ export default {
                 const callback = (r) => {
                     if (r.state) {
                         //显示 user card
-                        this.user = Object.assign({}, r.data);
+                        if (r.data) {
+                            this.user = Object.assign({}, r.data);
+                        } else {
+                            this.$message({
+                                message: "未找到匹配内容！"
+                            })
+                        }
                     } else {
                         this.$message({
                             message: r.message,
