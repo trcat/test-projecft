@@ -38,7 +38,7 @@
                     <el-input type="email" v-model="profileForm.email" :disabled="disabled"></el-input>
                 </el-form-item>
                 <el-form-item label="密码">
-                    <el-button @click="editPassword = true" :disabled="disabled">修改密码</el-button>
+                    <el-button @click="openEditPasswordDialog" :disabled="disabled">修改密码</el-button>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -118,6 +118,13 @@ export default {
             this.profileForm.phone = this.user.phone;
             this.profileForm.email = this.user.email;
             this.editProfile = true;
+        },
+        openEditPasswordDialog(e) {
+            e.stopPropagation();
+
+            this.passwordForm.oldPassword = "";
+            this.passwordForm.newPassword = "";
+            this.editPassword = true
         },
         saveProfile(formName) {
             this.$refs[formName].validate((valid) => {

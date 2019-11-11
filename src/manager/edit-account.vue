@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <el-input placeholder="搜索账户" v-model="searchValue" :disabled="disabled">
+        <el-input placeholder="请输入学工号" v-model="searchValue" :disabled="disabled">
             <el-button slot="append" icon="el-icon-search" :disabled="disabled" :loading="loading" @click="searchUser"></el-button>
         </el-input>
         <template v-if="user">
@@ -85,7 +85,7 @@ export default {
                 email: "",
                 classOptions: []
             },
-            loadingClassOptions: true,
+            loadingClassOptions: false,
             rules: {
                 username: [{
                     required: true, message: "请填写姓名", trigger: "blur"
@@ -141,7 +141,7 @@ export default {
             this.loadingClassOptions = true;
             this.editForm = Object.assign({}, this.user);
 
-            if (this.editForm.identity === "student") {
+            if (this.editForm.identity === "student" && this.editForm.classOptions.length === 0) {
                 const callback = (r) => {
                     if (r.state) {
                         this.editForm.classOptions = r.data.map((c) => {
@@ -153,6 +153,7 @@ export default {
                         this.loadingClassOptions = false;
                     }
                 }
+                this.loadingClassOptions = true;
                 addAccountAPI.getClassOptions(callback);
             }
         },
