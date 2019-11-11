@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <el-form label-position="left" label-width="100px" :model="testForm" ref="testForm" rules="testFormRules" :disabled="disabled" hide-required-asterisk>
+        <el-form label-position="left" label-width="100px" :model="testForm" ref="testForm" :rules="testFormRules" :disabled="disabled" hide-required-asterisk>
             <el-form-item label="试卷名称" prop="name">
                 <el-input v-model="testForm.name"></el-input>
             </el-form-item>
@@ -8,7 +8,7 @@
                 <span>{{testForm.total}} 分</span>
             </el-form-item>
             <el-form-item>
-                <el-button id="save-button" type="primary" @click="saveTest('testForm')" :loading="loading">保存试卷</el-button>
+                <el-button id="save-button" type="primary" @click="saveTest('testForm')" :loading="loading">创建试卷</el-button>
             </el-form-item>
         </el-form>
         <el-divider></el-divider>
@@ -29,7 +29,7 @@
             :close-on-press-escape="false" 
             :show-close="false"
             append-to-body>
-            <el-form label-position="left" label-width="100px" :model="dialogForm" ref="dialogForm" rules="dialogFormRules" :disabled="disabled" hide-required-asterisk>
+            <el-form label-position="left" label-width="100px" :model="dialogForm" ref="dialogForm" :rules="dialogFormRules" :disabled="disabled" hide-required-asterisk>
                 <el-form-item label="题目" prop="content">
                     <el-input type="textarea" v-model="dialogForm.content"></el-input> 
                 </el-form-item>
@@ -100,7 +100,7 @@ export default {
             },
             testFormRules: {
                 name: [{
-                    requried: true, message: "请填写试卷名称", trigger: "blur"
+                    required: true, message: "请填写试卷名称", trigger: "blur"
                 }]
             },
             questions: [],
@@ -141,10 +141,10 @@ export default {
             },
             dialogFormRules: {
                 content: [{
-                    requried: true, message: "请填写题目文本！", trigger: "blur"
+                    required: true, message: "请填写题目文本！", trigger: "blur"
                 }],
                 type: [{
-                    requried: true, message: "请选择题目类型！", trigger: "blur"
+                    required: true, message: "请选择题目类型！", trigger: "blur"
                 }],
                 score: [{
                     required: true, message: "请设置题目得分！", trigger: "blur"
@@ -185,7 +185,7 @@ export default {
                             const r = {
                                 type: q.type,
                                 content: q.content,
-                                score: q.score,
+                                score: parseInt(q.score),
                                 description: q.description,
                                 answer: q.answer,
                                 questions: [
@@ -263,6 +263,7 @@ export default {
                 }
             });
             this.questions = result;
+            this._computeTotal();
         },
         saveQuestion(formName) {
             this.$refs[formName].validate((valid) => {
@@ -302,7 +303,8 @@ export default {
                         questions.push(this.dialogForm.id);
                     }
                     this.questions = questions;
-
+                    
+                    this._computeTotal();
                     this.$message({
                         message: "试题保存成功！",
                         type: "success"
@@ -340,6 +342,13 @@ export default {
             for(let o in this.dialogForm.options) {
                 this.dialogForm.options[o].type = "";
             }
+        },
+        _computeTotal() {
+            let count = 0;
+            this.questions.forEach((q) => {
+                count += parseInt(q.score);
+            })
+            this.testForm.total = count;
         }
     }
 }
