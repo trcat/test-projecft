@@ -166,6 +166,7 @@ export default {
                         message: "表单内容有误，请检查并重新填写！",
                         type: "error"
                     })
+                    return false;
                 }
             })
         },

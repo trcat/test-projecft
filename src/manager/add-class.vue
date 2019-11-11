@@ -47,7 +47,8 @@ export default {
                     this.$message({
                         message: "请填写班级名",
                         type: "error"
-                    })
+                    });
+                    return false;
                 }
             })
         }
