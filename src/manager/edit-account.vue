@@ -15,7 +15,7 @@
                 <div>账号类型: {{user.identity}}</div>
             </el-card>
             <el-dialog title="编辑个人信息" :visible.sync="editProfile" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-                <el-form label-position="left" label-width="100px" :model="editForm" ref="editForm" :rules="editFormRules" :disabled="disabled">
+                <el-form label-position="left" label-width="100px" :model="editForm" ref="editForm" :rules="editFormRules" :disabled="disabled" hide-required-asterisk>
                     <el-form-item label="账号类型">
                         <el-radio-group v-model="editForm.identity" disabled>
                             <el-radio label="student">学生</el-radio>

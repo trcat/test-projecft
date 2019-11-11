@@ -1,5 +1,5 @@
 <template>
-    <el-form label-position="left" label-width="100px" :model="form" ref="form" :rules="rules" :disabled="disabled">
+    <el-form label-position="left" label-width="100px" :model="form" ref="form" :rules="rules" :disabled="disabled" hide-required-asterisk>
         <el-form-item label="班级名" prop="className">
             <el-input v-model="form.class_name">
                 <el-button slot="append" type="primary" :loading="loading" @click="createClass('form')">提交</el-button>

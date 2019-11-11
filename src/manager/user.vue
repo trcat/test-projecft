@@ -28,7 +28,7 @@
                         <el-menu-item index="/user/add-test">添加试卷</el-menu-item>
                         <el-menu-item index="/user/edit-test">编辑试卷</el-menu-item>
                     </el-submenu>
-                    <el-menu-item index="/user/result-test">查看考试结果</el-menu-item>                    
+                    <el-menu-item index="/user/result-test"><i class="el-icon-s-marketing"/>查看考试结果</el-menu-item>                    
                 </template>
                 <!-- student menu -->
                 <template v-if="userIdentity === 'student'">

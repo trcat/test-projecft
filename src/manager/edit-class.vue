@@ -14,7 +14,7 @@
                 <div>班级编号: {{item.id}}</div>
             </el-card>
             <el-dialog title="编辑班级信息" :visible.sync="showEditClassDialog" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" v-loading="loadingClassMembers">
-                <el-form label-position="left" label-width="100px" :model="editClassForm" ref="editClassForm" :rules="editClassFormRules" :disabled="disabled">
+                <el-form label-position="left" label-width="100px" :model="editClassForm" ref="editClassForm" :rules="editClassFormRules" :disabled="disabled" hide-required-asterisk>
                     <el-form-item label="班级编号">
                         <el-input v-model="editClassForm.id" disabled></el-input>
                     </el-form-item>
