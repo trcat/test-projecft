@@ -38,7 +38,7 @@
             <el-divider>试题</el-divider>
             <el-card v-for="(item, index) in currentTest.questions" :key="item.id">
                 <div id="content">
-                    <span id="index">{{index}}.</span>
+                    <span id="index">{{index + 1}}.</span>
                     <span>{{item.content}}</span>
                     <span>()</span>
                     <span id="score">[{{item.score}}分]</span>
@@ -70,7 +70,7 @@
                 <el-divider></el-divider>
                 <el-card v-for="(item, index) in currentTest.questions" :key="item.id">
                     <div slot="header">
-                        <span>试题 {{index}}} </span>
+                        <span>试题 {{index + 1}}} </span>
                         <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item)" :disabled="disabled" circle></el-button>
                         <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editQuestion(item, index)" :disabled="disabled" circle></el-button>
                     </div>

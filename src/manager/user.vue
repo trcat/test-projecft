@@ -32,11 +32,11 @@
                 </template>
                 <!-- student menu -->
                 <template v-if="userIdentity === 'student'">
-                    <el-menu-item index="/user/visit-test">考试</el-menu-item>
+                    <el-menu-item index="/user/view-test">考试</el-menu-item>
                     <el-menu-item index="/user/result-test">查看考试结果</el-menu-item>                    
                 </template>
             </el-menu>
-            <el-button id="out" type="danger">登出</el-button>
+            <el-button id="out" type="danger" @click="cancel">登出</el-button>
         </el-aside>
         
         <el-container>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import API from "./user-rest.js";
 
 export default {
     data() {
@@ -98,6 +99,21 @@ export default {
             if (index !== this.activeMenu) {
                 this.$router.push(index);
             }
+        },
+        cancel() {
+            this.mainLoading = true;
+            API.loginOut(this.$store.state.user.id, (r) => {
+                if (r.state) {
+                    this.$store.commit("updateUser", null);
+                    this.$router.push("/");
+                } else {
+                    this.$message({
+                        message: r.message,
+                        type: "error"
+                    });
+                }
+                this.mainLoading = false;
+            });
         }
     },
     mounted() {
