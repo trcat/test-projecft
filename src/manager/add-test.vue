@@ -15,8 +15,8 @@
         <el-card v-for="(item, index) in questions" :key="item.id">
             <div slot="header">
                 <span>试题 {{index}}} </span>
-                <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item)" circle></el-button>
-                <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editQuestion(item, index)" circle></el-button>
+                <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item)" :disabled="disabled" circle></el-button>
+                <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editQuestion(item, index)" :disabled="disabled" circle></el-button>
             </div>
             <div>题目: {{item.content}}</div>
             <div>分数: {{item.total}}</div>
@@ -81,8 +81,8 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="showQuestionDialog = false">取 消</el-button>
-                <el-button type="primary" @click="saveQuestion('dialogForm')">保 存</el-button>
+                <el-button @click="showQuestionDialog = false" :disabled="disabled">取 消</el-button>
+                <el-button type="primary" @click="saveQuestion('dialogForm')" :disabled="disabled">保 存</el-button>
             </div>
         </el-dialog>
     </div>
@@ -188,17 +188,17 @@ export default {
                                 score: parseInt(q.score),
                                 description: q.description,
                                 answer: q.answer,
-                                questions: [
-                                    q.questions.A.content,
-                                    q.questions.B.content,
-                                    q.questions.C.content,
-                                    q.questions.D.content
+                                options: [
+                                    q.options.A.content,
+                                    q.options.B.content,
+                                    q.options.C.content,
+                                    q.options.D.content
                                 ]
                             };
 
                             if (r.type === "multiple") {
-                                r.questions.push(q.questions.E.content);
-                                r.questions.push(q.questions.F.content);
+                                r.options.push(q.options.E.content);
+                                r.options.push(q.options.F.content);
                             }
                         })
                     };
@@ -300,7 +300,7 @@ export default {
                         }
                     })
                     if (!stop) {
-                        questions.push(this.dialogForm.id);
+                        questions.push(this.dialogForm);
                     }
                     this.questions = questions;
                     
