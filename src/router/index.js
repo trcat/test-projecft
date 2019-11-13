@@ -12,6 +12,9 @@ import editClass from "../manager/edit-class.vue";
 import addTest from "../manager/add-test.vue";
 import editTest from "../manager/edit-test.vue";
 import resultTest from "../manager/result-test.vue";
+import viewTest from "../manager/view-test.vue";
+import notFind from "../manager/not-find.vue";
+import test from "../manager/test.vue";
 
 
 Vue.use(VueRouter);
@@ -92,8 +95,21 @@ const routes = [
                     activeMenu: "/user/",
                     subActiveMenu: "/user/result-test"
                 }
+            }, {
+                path: "view-test",
+                component: viewTest,
+                meta: {
+                    activeMenu: "/user/",
+                    subActiveMenu: "/user/view-test"
+                }
             }
         ]
+    }, {
+        path: "/test",
+        component: test
+    }, {
+        path: "*",
+        component: notFind
     }
 ];
 

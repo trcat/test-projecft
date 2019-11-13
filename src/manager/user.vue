@@ -142,13 +142,5 @@ export default {
         width: 100%;
         margin-top: 10%;
     }
-
-    #timer {
-        text-align: center;
-        #time {
-            color: gray;
-            font-size: 50px;
-        }
-    }
 </style>
 
