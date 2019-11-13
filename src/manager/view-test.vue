@@ -5,11 +5,11 @@
         </el-card>
         <el-card v-for="item in papers" :key="item.id">
             <div slot="header">
-                <span>{{item.name}}</span>
+                <span>{{item.paperLib.name}}</span>
                 <el-button class="card-button" type="text" @click="test(item)" circle>开始考试 >></el-button>
             </div>
-            <div>总分: {{item.total}}</div>
-            <div>题目数量: {{item.question_number}}</div>
+            <div>总分: {{item.paperLib.total}}</div>
+            <div>题目数量: {{item.paperLib.question_number}}</div>
         </el-card>
     </div>
 </template>
@@ -33,7 +33,7 @@ export default {
     mounted() {
         const callback = (r) => {
             if (r.state) {
-                this.papers = r.data;
+                this.papers = r.data
                 this.containerLoading = false;
             } 
         }
