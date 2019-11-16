@@ -452,7 +452,6 @@ export default {
         editQuestion(questionData) {
             let _question = Object.assign({}, questionData);
             _question.options = {};
-            console.log(questionData.options);
             for (let i = 0; i < questionData.options.length; i++) {
                 let key = String.fromCharCode(i + 65);
                 _question.options[key] = {

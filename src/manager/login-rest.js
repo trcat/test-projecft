@@ -47,7 +47,6 @@ export default class API {
             id: account,
             password: password
         };
-        console.log(data);
         _login(data, callback);
     }
     
@@ -56,7 +55,6 @@ export default class API {
             email: email,
             password: password
         };
-        console.log(data);
         _login(data, callback);
     }
 }

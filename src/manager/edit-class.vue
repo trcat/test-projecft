@@ -117,8 +117,6 @@ export default {
 
             const callback = (r) => {
                 if (r.state) {
-                    console.log('member');
-                    console.log(r.data.data);
                     this.editClassForm.classMembers = r.data.data;
                     this.loadingClassMembers = false;
                 }

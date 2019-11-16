@@ -173,8 +173,6 @@ export default {
             const callback = (r) => {
                 if (r.state) {
                     this.dialogTitle = `查看试卷 ${testData.id} 结果`
-                    console.log(r.data.score);
-                    console.log(r.data.paperLib.total);
                     this.tableData = [{
                         score: r.data.score,
                         total: r.data.paperLib.total

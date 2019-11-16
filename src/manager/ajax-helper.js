@@ -24,9 +24,6 @@ export default class AjaxHelper {
              */
             success: function (data, textStatus, jqXHR) {
                 if (typeof config.success === "function") {
-                    console.log("from rest: ");
-                    console.log(data);
-                    console.log(data.message);
                     config.success(data, textStatus, jqXHR);
                 }
             },
@@ -38,11 +35,6 @@ export default class AjaxHelper {
             error: function (jqXHR, textStatus, errorThrown) {
                 if (typeof config.error === "function") {
                     config.error(jqXHR, textStatus, errorThrown);
-                } else {
-                    console.log("操作失败！");
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
                 }
             },
             dataType: "json",
@@ -57,10 +49,12 @@ export default class AjaxHelper {
             ajaxObject.contentType = config.contentType;
         }
 
-        const token = "JWT " + $.cookie("token");
-        ajaxObject.headers = {
-            Authorization: token
-        };
+        if ($.cookie("token")) {
+            const token = "JWT " + $.cookie("token");
+            ajaxObject.headers = {
+                Authorization: token
+            };
+        }
 
         $.ajax(ajaxObject);
     }

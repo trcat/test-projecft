@@ -67,7 +67,7 @@ export default {
             }, 1000);
 
             //将 localStorage 中的 data 传至 API 中实现发送重置密码邮件的操作
-            API.getResetPassword(data, callback);
+            API.modifyPassword(data, callback);
         }
     }
 }
