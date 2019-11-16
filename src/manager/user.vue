@@ -9,7 +9,7 @@
                     <span>欢迎，{{userName}} !</span>
                 </el-menu-item>
                 <!-- admin menu -->
-                <template v-if="userIdentity === 'administrator'">
+                <template v-if="userIdentity === 'admin'">
                     <el-submenu index="2">
                         <template slot="title"><i class="el-icon-menu"></i>管理账号</template>
                         <el-menu-item index="/user/add-account">添加账号</el-menu-item>
@@ -123,6 +123,8 @@ export default {
         } else {
             this.$router.push("/");
         }
+
+        window.onbeforeunload = () => {this.cancel();}
     }
 }
 </script>

@@ -16,22 +16,25 @@
                         <el-main>
                             <div id="container">
                                 <el-card v-for="(item, index) in questions" :key="item.id">
-                                    <div id="content">
+                                    <div class="content">
                                         <span id="index">{{index + 1}}.</span>
                                         <span>{{item.content}}</span>
                                         <span>()</span>
                                         <span id="score">[{{item.score}}分]</span>
                                     </div>
-                                    <div id="options">
-                                        <el-checkbox-group v-modal="answer[index + 1]">
-                                            <el-checkbox v-for="(o, i) in item.options" :key="o" :label="String.fromCharCode(i + 65)">
-                                                <span>{{String.fromCharCode(i + 65)}}</span>
-                                                <span>{{o}}</span>
-                                            </el-checkbox>
+                                    <div class="options">
+                                        <el-checkbox-group v-model="answer">
+                                            <div v-for="(o, i) in item.options" :key="o + '_' + i">
+                                                <el-checkbox v-if="o" :label="item.id + '_' +String.fromCharCode(i + 65)">
+                                                    <span>{{String.fromCharCode(i + 65)}}</span>
+                                                    <span>{{o}}</span>
+                                                </el-checkbox>
+                                            </div>
+
                                         </el-checkbox-group>
                                     </div>
                                 </el-card>
-                                <el-button id="submit-button" type="primary" @click="submitAnswer">创建试卷</el-button>
+                                <el-button id="submit-button" type="primary" @click="submitAnswer">提交答案</el-button>
                             </div>
                         </el-main>
                     </el-container>
@@ -43,6 +46,7 @@
 
 <script>
 import API from "./test.js";
+import AjaxHelper from "./ajax-helper.js"
 
 export default {
     data() {
@@ -50,7 +54,7 @@ export default {
             mainLoading: true,
             time: 0,
             questions: [],
-            answer: {}
+            answer: []
         }
     },
     methods: {
@@ -67,15 +71,26 @@ export default {
                 }
             }
 
+            const user_answer = {};
+            this.answer.forEach((a) => {
+                const questionId = a.split("_")[0];
+                const answer = a.split("_")[1];
+                if (user_answer[questionId]) {
+                    user_answer[questionId].push(answer);
+                } else {
+                    user_answer[questionId] = [answer];
+                }
+            })
+
             this.mainLoading = true;
-            API.submitAnswer(this.$store.state.user.id, this.$store.state.currentTest.id, this.answer, callback);
+            API.submitAnswer(this.$store.state.user.id, this.$store.state.currentTest.id, user_answer, callback);
         }
     },
     mounted() {
         if (this.$store.state.currentTest) {
             this.questions = this.$store.state.currentTest.questions;
             this.time = this.$store.state.currentTest.test_time;
-            const timer = window.setInterval(() => {
+            let timer = window.setInterval(() => {
                 this.time -= 1;
                 if (this.time === 0) {
                     window.clearInterval(timer);
@@ -87,9 +102,21 @@ export default {
                     });
                 }
             }, 60000)
+            this.mainLoading = false;
         } else {
             this.$router.push("/");
         }
+
+         window.onbeforeunload = () => {
+            AjaxHelper.ajax({
+                url: `/user/loginOut/${this.$store.state.user.id}/`,
+                type: "delete",
+                async: false,
+                success: () => {
+                    this.$store.commit('updateUser', null);
+                }
+            });
+         }
     },
 }
 </script>
@@ -118,4 +145,14 @@ export default {
         margin-left: auto;
         margin-right: auto;
     }
+    
+    .el-card {
+        margin-bottom: 1em;
+    }
+
+    .options {
+        margin-top: 1em;
+    }
+
+    
 </style>

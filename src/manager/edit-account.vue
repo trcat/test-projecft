@@ -15,12 +15,12 @@
                 <div>账号类型: {{user.identity}}</div>
             </el-card>
             <el-dialog title="编辑个人信息" :visible.sync="editProfile" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-                <el-form label-position="left" label-width="100px" :model="editForm" ref="editForm" :rules="editFormRules" :disabled="disabled" hide-required-asterisk>
+                <el-form label-position="left" label-width="100px" :model="editForm" ref="editForm" :rules="rules" :disabled="disabled" hide-required-asterisk>
                     <el-form-item label="账号类型">
                         <el-radio-group v-model="editForm.identity" disabled>
                             <el-radio label="student">学生</el-radio>
-                            <el-radio label="techer">教师</el-radio>
-                            <el-radio label="administrator">管理员</el-radio>
+                            <el-radio label="teacher">教师</el-radio>
+                            <el-radio label="admin">管理员</el-radio>
                         </el-radio-group> 
                     </el-form-item>
                     <el-form-item v-if="editForm.identity === 'student'" label="所属班级" prop="class">
@@ -166,6 +166,7 @@ export default {
                         message: "账号已删除！",
                         type: "success"
                     });
+                    this.user = null;
                 } else {
                     this.$message({
                         message: r.message,
@@ -189,7 +190,7 @@ export default {
                                 type: "success"
                             });
 
-                            this.user = Object.assign({}, this.editProfile);
+                            this.user = Object.assign({}, this.editForm);
                         } else {
                             this.$message({
                                 message: r.message,

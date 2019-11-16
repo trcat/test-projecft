@@ -25,7 +25,9 @@
                     <el-form-item prop="password">
                             <el-input 
                                 v-model="loginForm.password"
-                                :disabled="disabled">
+                                :disabled="disabled"
+                                type="password"
+                                show-password>
                                 <div slot="prepend">密码</div>
                             </el-input>
                     </el-form-item>
@@ -53,6 +55,7 @@ import centerContainer from "../components/centerContainer.vue";
 import $ from "jquery";
 import "jquery.cookie";
 import API from "./login-rest.js";
+import AjaxHelper from "./ajax-helper.js";
 
 let STYLE = {
     defalut: "0",
@@ -114,8 +117,8 @@ export default {
               //显示错误讯息
               form.errorMessage = data.message;
               //恢复 input 和 button 成可编辑状态
-              this.disabled = true;
-              this.loading = true;
+              this.disabled = false;
+              this.loading = false;
             }
           }
 
@@ -144,6 +147,22 @@ export default {
       //跳转至忘记密码页面
       this.$router.push("/find-password");
     },
+    mounted() {
+      window.onload = () => {
+        if (this.$store.state.user) {
+          window.onbeforeunload = () => {
+              AjaxHelper.ajax({
+                  url: `/user/loginOut/${this.$store.state.user.id}/`,
+                  type: "delete",
+                  async: false,
+                  success: () => {
+                      this.$store.commit('updateUser', null);
+                  }
+              });
+          }
+        }
+      }
+    }
   }
 };
 </script>

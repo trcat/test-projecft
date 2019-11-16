@@ -35,7 +35,7 @@
                     <el-button @click="showEditClassDialog = false" :disabled="disabled">取 消</el-button>
                 </div>
             </el-dialog>
-            <el-dialog title="添加成员" :visible.sync="showAddMemberDialog" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" append-to-body>
+            <el-dialog title="添加成员" :visible.sync="showAddMemberDialog" :close-on-press-escape="false" :show-close="false" append-to-body>
                 <div id="member-dialog-container">
                     <el-input placeholder="请输入学工号" v-model="searchMemberValue" :disabled="disabled">
                         <el-button slot="append" icon="el-icon-search" :disabled="disabled" :loading="loading" @click="searchMember(searchMemberValue)"></el-button>
@@ -117,7 +117,9 @@ export default {
 
             const callback = (r) => {
                 if (r.state) {
-                    this.editClassForm.classMembers = r.data;
+                    console.log('member');
+                    console.log(r.data.data);
+                    this.editClassForm.classMembers = r.data.data;
                     this.loadingClassMembers = false;
                 }
             }
@@ -127,12 +129,12 @@ export default {
         },
         deleteClass(classData) {
             const callback = (r) => {
-                this.$message({
-                    message: r.message,
-                    type: r.state ? "success" : "error"
-                });
-
                 if (r.state) {
+                    this.$message({
+                        message: "成功删除编辑！",
+                        type: "success"
+                    });
+
                     const newClass = [];
                     this.classes.forEach((i) => {
                         if (i.id !== classData.id) {
@@ -140,6 +142,11 @@ export default {
                         }
                     });
                     this.classes = newClass;
+                } else {
+                    this.$message({
+                        message: r.message,
+                        type: "error"
+                    });
                 }
 
                 this._reset();

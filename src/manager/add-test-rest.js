@@ -2,12 +2,14 @@ import AjaxHelper from "./ajax-helper.js";
 
 export default class API {
     static createTest(data, callback) {
+        console.log(data);
         AjaxHelper.ajax({
             url: "/paper/paperLibs/",
             type: "post",
-            data: data,
+            data: JSON.stringify(data),
             async: true,
-            success: callback
+            success: callback,
+            contentType: "application/json;charset=utf-8"
         });
     }
 }

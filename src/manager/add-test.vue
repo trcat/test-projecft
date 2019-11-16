@@ -14,12 +14,12 @@
         <el-divider></el-divider>
         <el-card v-for="(item, index) in questions" :key="item.id">
             <div slot="header">
-                <span>试题 {{index}}} </span>
+                <span>试题 {{index + 1}} </span>
                 <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item)" :disabled="disabled" circle></el-button>
                 <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editQuestion(item, index)" :disabled="disabled" circle></el-button>
             </div>
             <div>题目: {{item.content}}</div>
-            <div>分数: {{item.total}}</div>
+            <div>分数: {{item.score}}</div>
         </el-card>
         <el-button id="add-question" @click="addQuestion">+ 添加试题</el-button>
         <el-dialog
@@ -180,7 +180,6 @@ export default {
                         name: this.testForm.name,
                         question_number: this.questions.length,
                         total: this.testForm.total,
-                        user: this.$store.state.user,
                         questions: this.questions.map((q) => {
                             const r = {
                                 type: q.type,
@@ -200,6 +199,7 @@ export default {
                                 r.options.push(q.options.E.content);
                                 r.options.push(q.options.F.content);
                             }
+                            return r;
                         })
                     };
                     API.createTest(_data, callback);
@@ -218,7 +218,7 @@ export default {
                 id: Date.now().toString(),
                 content: "",
                 type: "single",
-                sroce: "",
+                score: "",
                 options: {
                     A: {
                         content: "",
@@ -271,12 +271,21 @@ export default {
                     let stop = false;
                     for (let o in this.dialogForm.options) {
                         if (!this.dialogForm.options[o].content) {
-                            this.$message({
-                                message: "选项内容不能为空！",
-                                type: "error"
-                            });
-                            stop = true;
-                            break;
+                            if (this.dialogForm.type === "single" && o !== "E" && o !== "F") {
+                                this.$message({
+                                    message: "选项内容不能为空！",
+                                    type: "error"
+                                });
+                                stop = true;
+                                break;
+                            } else if (this.dialogForm.type === "multiple") {
+                                this.$message({
+                                    message: "选项内容不能为空！",
+                                    type: "error"
+                                });
+                                stop = true;
+                                break;
+                            }
                         }
                     }
 

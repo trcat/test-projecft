@@ -3,14 +3,14 @@
         <el-card v-if="papers.length === 0">
             <h1>无任何试卷！</h1>
         </el-card>
-        <el-card v-for="item in papers" :key="item.id">
+        <el-card v-for="(item, i) in papers" :key="item.id + '_' + i">
             <div slot="header">
-                <span>{{item.name}}</span>
+                <span>{{item.paperLib.name}}</span>
                 <el-button class="card-button" type="text" @click="viewTest(item)" circle>查看考试结果 >></el-button>
             </div>
-            <div>考试时间: {{item.start_time.getFullYear()}}-{{item.start_time.getMonth() + 1}}-{{item.start_time.getDate()}}</div>
-            <div>总分: {{item.total}}</div>
-            <div>题目数量: {{item.question_number}}</div>
+            <div>考试时间: {{new Date(item.start_time).getFullYear()}}-{{new Date(item.start_time).getMonth() + 1}}-{{new Date(item.start_time).getDate()}}</div>
+            <div>总分: {{item.paperLib.total}}</div>
+            <div>题目数量: {{item.paperLib.question_number}}</div>
         </el-card>
         <el-pagination 
             v-if="user && user.identity === 'teacher'"
@@ -30,7 +30,12 @@
                 :data="tableData"
                 style="width: 100%">
                 <el-table-column
-                    prop="username"
+                    prop="user"
+                    label="学工号"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="user_name"
                     label="姓名"
                     width="180">
                 </el-table-column>
@@ -39,7 +44,7 @@
                     label="得分">
                 </el-table-column>
                 <el-table-column
-                    prop="my_class"
+                    prop="class"
                     label="所在班级"
                     width="180">
                 </el-table-column>
@@ -52,8 +57,6 @@
                 :data="tableData"
                 style="width: 100%"
                 border>
-                <el-table-column prop="name" label="姓名" width="180">
-                </el-table-column>
                 <el-table-column
                     prop="score"
                     label="考试最终成绩"
@@ -70,14 +73,14 @@
                 <div slot="header">
                     <span>题目{{index + 1}}</span>
                 </div>
-                <div id="content">
+                <div class="content">
                     <span>{{item.content}}</span>
                     <span>()</span>
                     <span id="score">[{{item.score}}分]</span>
                 </div>
-                <div id="options">
-                    <div v-for="(o, i) in item.options" :key="o">
-                        <el-checkbox>
+                <div class="options">
+                    <div v-for="(o, i) in item.options" :key="o + '_' + i">
+                        <el-checkbox v-if="o">
                             <span>{{String.fromCharCode(i + 65)}}</span>
                             <span>{{o}}</span>
                         </el-checkbox>
@@ -85,10 +88,10 @@
                 </div>
                 <el-form label-position="left" label-width="100px">
                     <el-form-item label="所选答案:">
-                        <span>{{item.user_answer}}</span>
+                        <span>{{user_answer[item.id] ? user_answer[item.id].join(" ") : ""}}</span>
                     </el-form-item>
                     <el-form-item label="正确答案:">
-                        <span>{{item.answer}}</span>
+                        <span>{{item.answer ? item.answer.join(" ") : ""}}</span>
                     </el-form-item>
                     <el-form-item label="题目详解:">
                         <span>{{item.description}}</span>
@@ -116,6 +119,7 @@ export default {
             questions: [],
             showTableDialog: false,
             showTestDialog: false,
+            user_answer: {},
         }
     },
     computed: {
@@ -163,17 +167,20 @@ export default {
                 this._reset();
             }
             this._loading();
-            API.getTestResult(this.user, testData.id, callback, testData.start_time);
+            API.getTestResult(this.user, testData.id, callback);
         },
         viewTestByStudent(testData) {
             const callback = (r) => {
                 if (r.state) {
                     this.dialogTitle = `查看试卷 ${testData.id} 结果`
-                    this.tableData = {
+                    console.log(r.data.score);
+                    console.log(r.data.paperLib.total);
+                    this.tableData = [{
                         score: r.data.score,
                         total: r.data.paperLib.total
-                    }
+                    }];
                     this.questions = r.data.paperLib.questions;
+                    this.user_answer = r.data.user_answer;
                     this.showTestDialog = true;
                     this._reset();
                 }
@@ -208,6 +215,7 @@ export default {
     }
 
     .el-card {
+        margin-bottom: 1em;
         #content {
             font-size: 14px;
             #score {
@@ -216,8 +224,8 @@ export default {
             #index {
                 margin-right: 20px;
             }
-            #options {
-                margin-top: 35px;
+            .options {
+                margin-top: 1em;
                 div {
                     margin-bottom: 10px;
                 }

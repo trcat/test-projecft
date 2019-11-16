@@ -3,7 +3,7 @@ import AjaxHelper from "./ajax-helper.js";
 export default class API {
     static searchClass(className, callback) {
         AjaxHelper.ajax({
-            url: `/user/class/?search=${className}/`,
+            url: `/user/class/?search=${className}`,
             type: "get",
             async: true,
             success: callback

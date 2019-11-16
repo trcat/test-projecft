@@ -10,6 +10,7 @@ export default class API {
         });
     }
     static createAccount(data, callback) {
+        console.log(data);
         AjaxHelper.ajax({
             url: "/user/userInfo/",
             type: "post",

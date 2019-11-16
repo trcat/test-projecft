@@ -25,23 +25,25 @@ export default class API {
         AjaxHelper.ajax({
             url: `/paper/paperLibs/${data.id}/`,
             type: 'put',
-            data: data,
+            data: JSON.stringify(data),
             async: true,
-            success: callback
+            success: callback,
+            contentType: "application/json;charset=utf-8"
         });
     }
     static dispatchTest(data, callback) {
         AjaxHelper.ajax({
             url: "/paper/papers/",
             type: "post",
-            data: data,
+            data: JSON.stringify(data),
             async: true,
-            success: callback
+            success: callback,
+            contentType: "application/json;charset=utf-8"
         });
     }
     static getQuestionsById(id, callback) {
         AjaxHelper.ajax({
-            url: `/paper/papers/${id}/`,
+            url: `/paper/paperLibs/${id}/`,
             type: "get",
             async: true,
             success: callback

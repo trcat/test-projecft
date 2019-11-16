@@ -11,6 +11,7 @@ export default class AjaxHelper {
      * @param {boolean|null|undefined} async 
      * @param {Function|null|undefined} success 
      * @param {Function|null|undefined} error 
+     * @param {string} contentType
      */
     static ajax(config) {
         let ajaxObject = {
@@ -23,6 +24,9 @@ export default class AjaxHelper {
              */
             success: function (data, textStatus, jqXHR) {
                 if (typeof config.success === "function") {
+                    console.log("from rest: ");
+                    console.log(data);
+                    console.log(data.message);
                     config.success(data, textStatus, jqXHR);
                 }
             },
@@ -47,6 +51,10 @@ export default class AjaxHelper {
 
         if (config.data) {
             ajaxObject.data = config.data;
+        }
+
+        if (config.contentType) {
+            ajaxObject.contentType = config.contentType;
         }
 
         const token = "JWT " + $.cookie("token");

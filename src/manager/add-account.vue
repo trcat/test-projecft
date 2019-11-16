@@ -18,6 +18,9 @@
                 </el-option>
             </el-select>
         </el-form-item>
+        <el-form-item label="学工号" prop="id">
+            <el-input v-model="form.id"></el-input>
+        </el-form-item>
         <el-form-item label="姓名" prop="name">
             <el-input v-model="form.name"></el-input>
         </el-form-item>
@@ -49,7 +52,7 @@ export default {
                 identity: "student",
                 class: null,
                 classOptions: [],
-                id: null,
+                id: "",
                 name: "",
                 gender: "male",
                 phone: "",
@@ -59,6 +62,9 @@ export default {
             loading: false,
             formLoading: true,
             rules: {
+                id: [{
+                    required: true, message: "请填写学工号", trigger: "blur"
+                }],
                 name: [{
                     required: true, message: "请填写姓名", trigger: "blur"
                 }],

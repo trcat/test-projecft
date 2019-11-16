@@ -9,9 +9,8 @@
                 <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteTest(item)" :disabled="disabled" circle></el-button>
                 <el-button class="card-button" type="success" icon="el-icon-s-promotion" @click="dispatchTest(item)" :disabled="disabled" circle ></el-button>
                 <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editTest(item)" :disabled="disabled" circle></el-button>
-                <el-button class="card-button" icon="el-icon-view" @click="viewTest(item)" circle></el-button>
+                <el-button class="card-button" icon="el-icon-view" @click="viewTest(item)" :disabled="disabled" circle></el-button>
             </div>
-            <div>试卷创建时间: {{item.add_time.getFullYear()}}-{{item.add_time.getMonth() + 1}}-{{item.add_time.getDate()}}</div>
             <div>总分: {{item.total}}</div>
             <div>题目数量: {{item.question_number}}</div>
         </el-card>
@@ -65,21 +64,22 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button id="save-button" type="primary" @click="saveTest('currentTest')">保存修改</el-button>
+                        <el-button @click="showEditDialog=false">取消</el-button>
                     </el-form-item>
                 </el-form>
                 <el-divider></el-divider>
                 <el-card v-for="(item, index) in currentTest.questions" :key="item.id">
                     <div slot="header">
-                        <span>试题 {{index + 1}}} </span>
+                        <span>试题 {{index + 1}} </span>
                         <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item)" :disabled="disabled" circle></el-button>
                         <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editQuestion(item, index)" :disabled="disabled" circle></el-button>
                     </div>
                     <div>题目: {{item.content}}</div>
-                    <div>分数: {{item.total}}</div>
+                    <div>分数: {{item.score}}</div>
                 </el-card>
                 <el-button id="add-question" @click="addQuestion">+ 添加试题</el-button>
                 <el-dialog
-                    :title="currentQuestion.id"
+                    :title="currentQuestion.id || '添加试题'"
                     :visible.sync="showQuestionDialog"
                     :close-on-click-modal="false" 
                     :close-on-press-escape="false" 
@@ -168,7 +168,7 @@
             <el-transfer v-model="currentDispatch.classes" :data="dispatchableClasses" :titles="['可选班级', '派卷班级']"/>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="showDispatchDialog = false">取 消</el-button>
-                <el-button type="primary" @click="disaptch('currentDispatch')">派 卷</el-button>
+                <el-button type="primary" @click="dispatch('currentDispatch')">派 卷</el-button>
             </div>
         </el-dialog>
     </div>
@@ -287,12 +287,12 @@ export default {
             this._loading();
             API.deleteTest(testData.id, callback);
         },
-        disaptchTest(testData) {
+        dispatchTest(testData) {
             const callback = (r) => {
                 if (r.state) {
                     this.dispatchableClasses = r.data.map((i) => {
                         return {
-                            key: i.id,
+                            key: i.class_name,
                             label: i.class_name
                         }
                     });
@@ -303,6 +303,7 @@ export default {
                         classes: []
                     };
                     this.showDispatchDialog = true;
+                    this._reset();
                 }
             }
 
@@ -381,7 +382,6 @@ export default {
                         name: this.currentTest.name,
                         question_number: this.currentTest.questions.length,
                         total: this.currentTest.total,
-                        user: this.$store.state.user,
                         questions: this.currentTest.questions
                     };
 
@@ -415,10 +415,9 @@ export default {
         },
         addQuestion() {
             this.currentQuestion = {
-                id: `添加试题 ${Date.now().toString()}`,
                 content: "",
                 type: "single",
-                sroce: "",
+                score: "",
                 options: {
                     A: {
                         content: "",
@@ -451,8 +450,9 @@ export default {
             this.showQuestionDialog = true;
         },
         editQuestion(questionData) {
-            let _question = questionData;
+            let _question = Object.assign({}, questionData);
             _question.options = {};
+            console.log(questionData.options);
             for (let i = 0; i < questionData.options.length; i++) {
                 let key = String.fromCharCode(i + 65);
                 _question.options[key] = {
@@ -479,12 +479,21 @@ export default {
                     let stop = false;
                     for (let o in this.currentQuestion.options) {
                         if (!this.currentQuestion.options[o].content) {
-                            this.$message({
-                                message: "选项内容不能为空！",
-                                type: "error"
-                            });
-                            stop = true;
-                            break;
+                            if (this.currentQuestion.type === "single" && o !== "E" && o !== "F") {
+                                this.$message({
+                                    message: "选项内容不能为空！",
+                                    type: "error"
+                                });
+                                stop = true;
+                                break;
+                            } else if (this.currentQuestion.type === "multiple") {
+                                this.$message({
+                                    message: "选项内容不能为空！",
+                                    type: "error"
+                                });
+                                stop = true;
+                                break;
+                            }
                         }
                     }
 
@@ -500,27 +509,31 @@ export default {
                         return false;
                     }
 
-                    let questions = this.currentQuestion.questions.concat();
-                    this.currentQuestion.questions.forEach((q, index) => {
+                    let questions = this.currentTest.questions.concat();
+                    this.currentTest.questions.forEach((q, index) => {
                         if (q.id === this.currentQuestion.id) {
                             questions[index] = Object.assign({}, this.currentQuestion);
+                            questions[index].options = [];
                             for (let i in this.currentQuestion.options) {
-                                questions[index].options = this.currentQuestion.options[i].content;
+                                questions[index].options.push(this.currentQuestion.options[i].content);
                             }
                             stop = true;
                         }
                     })
+
                     if (!stop) {
-                        let _r = this.currentQuestion;
+                        let _r = Object.assign({}, this.currentQuestion);
                         _r.options = [];
                         for (let i in this.currentQuestion.options) {
                             _r.options.push(this.currentQuestion.options[i].content);
                         }
                         questions.push(_r);
                     }
-                    this.currentTest.questions = questions;
+
+                    this.currentTest.questions = questions.concat();
                     
                     this._computeTotal();
+                    this.showQuestionDialog = false;
                     this.$message({
                         message: "试题保存成功！",
                         type: "success"
@@ -611,6 +624,7 @@ export default {
     }
 
     .el-card {
+        margin-bottom: 1em;
         #content {
             font-size: 14px;
             #score {

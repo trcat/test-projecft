@@ -18,7 +18,7 @@ export default {
                 class_name: ""
             },
             rules: {
-                className: [{
+                class_name: [{
                     required: true, message: "请填写班级名", trigger: "blur"
                 }]
             },
