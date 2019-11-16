@@ -239,8 +239,8 @@ export default {
             }
 
             if (user.oldPassword && user.newPassword) {
-                result.oldPassword = user.oldPassword;
-                result.newPassword = user.newPassword;
+                result.old_password = user.oldPassword;
+                result.new_password = user.newPassword;
             }
 
             return result;
