@@ -116,6 +116,7 @@ export default {
                     this.$store.commit('updateUser', null);
                 }
             });
+            return  "离开此页面会或清理 cookie，页面部分行为会出错，是否继续?";
          }
     },
 }

@@ -150,7 +150,7 @@ export default {
     mounted() {
       window.onload = () => {
         if (this.$store.state.user) {
-          window.onbeforeunload = () => {
+          window.onload = () => {
               AjaxHelper.ajax({
                   url: `/user/loginOut/${this.$store.state.user.id}/`,
                   type: "delete",

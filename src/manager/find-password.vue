@@ -27,6 +27,10 @@
                     :loading="loading">
                     {{buttonName}}
                 </el-button>
+                <el-button 
+                    @click="backLogin">
+                    返回登录页
+                </el-button>
             </div>
         </el-card>
     </container>
@@ -114,6 +118,9 @@ export default {
                     return false;
                 }
             })
+        },
+        backLogin() {
+            this.$router.push("/");
         }
     }
 }

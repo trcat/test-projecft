@@ -124,7 +124,10 @@ export default {
             this.$router.push("/");
         }
 
-        window.onbeforeunload = () => {this.cancel();}
+        window.onbeforeunload = () => {
+            this.cancel
+            return  "离开此页面会或清理 cookie，页面部分行为会出错，是否继续?";
+        }
     }
 }
 </script>

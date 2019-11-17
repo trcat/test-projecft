@@ -141,6 +141,10 @@ export default {
             this.loadingClassOptions = true;
             this.editForm = Object.assign({}, this.user);
 
+            if (!this.editForm.classOptions) {
+                this.editForm.classOptions = [];
+            }
+
             if (this.editForm.identity === "student" && this.editForm.classOptions.length === 0) {
                 const callback = (r) => {
                     if (r.state) {

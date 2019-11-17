@@ -4,7 +4,7 @@
             <el-radio-group v-model="form.identity">
                 <el-radio label="student">学生</el-radio>
                 <el-radio label="teacher">教师</el-radio>
-                <el-radio label="administrator">管理员</el-radio>
+                <el-radio label="admin">管理员</el-radio>
             </el-radio-group>
         </el-form-item>
         <el-form-item v-if="form.identity === 'student'" label="所属班级" prop="class">
@@ -82,17 +82,10 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const callback = (r) => {
-                        if (r.state) {
-                            this.$message({
-                                message: "创建成功！",
-                                type: "success"
-                            });
-                        } else {
-                            this.$message({
-                                message: r.message,
-                                type: "error"
-                            });
-                        }
+                        this.$message({
+                            message: r.message,
+                            type: r.state ? "success" : "error"
+                        })
                         
                         this.disabled = false;
                         this.loading = false;

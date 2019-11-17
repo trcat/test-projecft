@@ -333,7 +333,7 @@ export default {
                 this.dialogForm.options[buttonName].type = "success";
                 this.dialogForm.answer = [buttonName];
             } else {
-                this.dialogForm.options[buttonName].type = "success";
+                this.dialogForm.options[buttonName].type = this.dialogForm.options[buttonName].type === "success" ? "" : "success";
                 const answer = this.dialogForm.answer.concat();
                 answer.push(buttonName);
                 this.dialogForm.answer = answer;

@@ -71,13 +71,13 @@
                 <el-card v-for="(item, index) in currentTest.questions" :key="item.id">
                     <div slot="header">
                         <span>试题 {{index + 1}} </span>
-                        <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item)" :disabled="disabled" circle></el-button>
+                        <el-button class="card-button" type="danger" icon="el-icon-delete" @click="deleteQuestion(item, index)" :disabled="disabled" circle></el-button>
                         <el-button class="card-button" type="primary" icon="el-icon-edit" @click="editQuestion(item, index)" :disabled="disabled" circle></el-button>
                     </div>
                     <div>题目: {{item.content}}</div>
                     <div>分数: {{item.score}}</div>
                 </el-card>
-                <el-button id="add-question" @click="addQuestion">+ 添加试题</el-button>
+                <el-button id="add-question" @click="addQuestion" :disabled="disabled">+ 添加试题</el-button>
                 <el-dialog
                     :title="currentQuestion.id || '添加试题'"
                     :visible.sync="showQuestionDialog"
@@ -462,10 +462,10 @@ export default {
             this.currentQuestion = _question;
             this.showQuestionDialog = true;
         },
-        deleteQuestion(questionData) {
+        deleteQuestion(questionData, index) {
             const result = [];
-            this.currentTest.questions.forEach((q) => {
-                if (q.id !== questionData.id) {
+            this.currentTest.questions.forEach((q, i) => {
+                if (index !== i) {
                     result.push(q);
                 }
             });
@@ -509,24 +509,24 @@ export default {
                     }
 
                     let questions = this.currentTest.questions.concat();
-                    this.currentTest.questions.forEach((q, index) => {
-                        if (q.id === this.currentQuestion.id) {
-                            questions[index] = Object.assign({}, this.currentQuestion);
-                            questions[index].options = [];
-                            for (let i in this.currentQuestion.options) {
-                                questions[index].options.push(this.currentQuestion.options[i].content);
-                            }
-                            stop = true;
-                        }
-                    })
 
-                    if (!stop) {
+                    if (!this.currentQuestion.id) {
                         let _r = Object.assign({}, this.currentQuestion);
                         _r.options = [];
                         for (let i in this.currentQuestion.options) {
                             _r.options.push(this.currentQuestion.options[i].content);
                         }
                         questions.push(_r);
+                    } else {
+                        this.currentTest.questions.forEach((q, index) => {
+                            if (q.id === this.currentQuestion.id) {
+                                questions[index] = Object.assign({}, this.currentQuestion);
+                                questions[index].options = [];
+                                for (let i in this.currentQuestion.options) {
+                                    questions[index].options.push(this.currentQuestion.options[i].content);
+                                }
+                            }
+                        })
                     }
 
                     this.currentTest.questions = questions.concat();
