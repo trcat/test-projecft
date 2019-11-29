@@ -94,12 +94,11 @@ export default {
                 this.time -= 1;
                 if (this.time === 0) {
                     window.clearInterval(timer);
-                    this.$alert('时间已经到，禁止答题！', '考试时间到', {
-                        confirmButtonText: '确定',
-                        callback: () => {
-                             this.submitAnswer();
-                        }
-                    });
+                    const url = location.href;
+                    if (url.indexOf('/test') !== -1) {
+                        alert('考试时间已经到，禁止答题！');
+                    }
+                    this.submitAnswer();
                 }
             }, 60000)
             this.mainLoading = false;
