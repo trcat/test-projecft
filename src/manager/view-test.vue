@@ -32,8 +32,8 @@ export default {
         },
         getTestStatus(time) {
             const date = new Date(time);
-            const dateString = `${date.getFullYear()}/${date.getMonth + 1}/${date.getDate()}/${date.getHours}`;
-            const enable = Date.parse(time) - Date.now() < 0;
+            const dateString = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}/${date.getHours()}`;
+            const enable = Date.parse(date) - Date.now() < 0;
             
             return {enable, dateString};
         }

@@ -61,13 +61,12 @@ export default {
         submitAnswer() {
             const callback = (r) => {
                 if (r.state) {
-                    this.$alert(`考试得分: ${r.data.get_score}`, '考试结束', {
-                        confirmButtonText: '确定',
-                        callback: () => {
-                            this.$store.commit("updateCurrentTest", null);
-                            this.$router.push("/user/result-test")
-                        }
-                    });
+                    const url = location.href;
+                    if (url.indexOf('/test') !== -1) {
+                        alert(`考试得分: ${r.data.get_score}`);
+                    }
+                    this.$store.commit("updateCurrentTest", null); 
+                    this.$router.push("/user/result-test");
                 }
             }
 
