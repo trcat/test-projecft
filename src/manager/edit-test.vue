@@ -167,8 +167,8 @@
             <el-divider></el-divider>
             <el-transfer v-model="currentDispatch.classes" :data="dispatchableClasses" :titles="['可选班级', '派卷班级']"/>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="showDispatchDialog = false">取 消</el-button>
-                <el-button type="primary" @click="dispatch('currentDispatch')">派 卷</el-button>
+                <el-button @click="showDispatchDialog = false" :disabled="disabled">取 消</el-button>
+                <el-button type="primary" @click="dispatch('currentDispatch')" :disabled="disabled">派 卷</el-button>
             </div>
         </el-dialog>
     </div>
