@@ -12,7 +12,7 @@ module.exports = {
         }
     },
     devServer: {
-        proxy: "http://www.wanggh.cn:8000"
+        proxy: ""
     },
     configureWebpack: config => {
         if (debug) {
